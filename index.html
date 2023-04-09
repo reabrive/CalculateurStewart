@@ -124,24 +124,45 @@
 
      <script>
 		function calculerstewart() {
-                        var ph = parseFloat(document.getElementById("ph").value)
-			var na = parseFloat(document.getElementById("na").value);
-			var k = parseFloat(document.getElementById("k").value);
-			var ca = parseFloat(document.getElementById("ca").value);
-			var mg = parseFloat(document.getElementById("mg").value);
-			var cl = parseFloat(document.getElementById("cl").value);
-			var lactate = parseFloat(document.getElementById("lactate").value);
-			var phosphore = parseFloat(document.getElementById("phosphore").value);
-			var albumine = parseFloat(document.getElementById("albumine").value);
-			var bicarbonate = parseFloat(document.getElementById("bicarbonate").value);
+  var ph = parseFloat(document.getElementById("ph").value);
+  var na = parseFloat(document.getElementById("na").value);
+  var k = parseFloat(document.getElementById("k").value);
+  var ca = parseFloat(document.getElementById("ca").value);
+  var mg = parseFloat(document.getElementById("mg").value);
+  var cl = parseFloat(document.getElementById("cl").value);
+  var lactate = parseFloat(document.getElementById("lactate").value);
+  var phosphore = parseFloat(document.getElementById("phosphore").value);
+  var albumine = parseFloat(document.getElementById("albumine").value);
+  var bicarbonate = parseFloat(document.getElementById("bicarbonate").value);
 
-			var SIDa = (na+k+2*ca+2*mg)-(cl +lactate);
-			var SIDe = bicarbonate+0.28*albumine+1.8*phosphore;
-			var SIG = SIDa-SIDe;
-                        var kc = k-6*(7.40-ph);
+  var SIDa = (na + k + 2 * ca + 2 * mg) - (cl + lactate);
+  var SIDe = bicarbonate + 0.28 * albumine + 1.8 * phosphore;
+  var SIG = SIDa - SIDe;
+  var kc = k - 6 * (7.40 - ph);
 
-			document.getElementById("resultat").innerHTML = "<p>SIDa = "+SIDa.toFixed(2)+" mmol/L</p><p>SIDe = "+SIDe.toFixed(2)+" mmol/L</p><p>SIG = "+SIG.toFixed(2)+" mmol/L</p><p>Kaliémie corrigée = "+kc.toFixed(2)+" mmol/L</p>";
-		}
+  var message = "<p>SIDa = " + SIDa.toFixed(2) + " mmol/L</p><p>SIDe = " + SIDe.toFixed(2) + " mmol/L</p><p>SIG = " + SIG.toFixed(2) + " mmol/L</p><p>Kaliémie corrigée = " + kc.toFixed(2) + " mmol/L</p>";
+
+  if (ph > 7.42) {
+    message += "<p>Le patient est en alcalose.</p>";
+  } else if (ph < 7.38) {
+    message += "<p>Le patient est en acidose.</p>";
+  } else {
+    message += "<p>Le pH est dans la plage normale.</p>";
+  }
+
+  if (SIDa > 42 && SIG < 2) {
+    message += "<p>Selon la méthode de Stewart le patient présente une alcalose métabolique.</p>";
+  } else if (SIDa < 38 && SIG < 2) {
+    message += "<p>Selon la méthode Stewart le patient présente une acidose métabolique.</p>";
+  }
+
+  if (SIG > 3) {
+    message += "<p>Selon la méthode de Stewart la présence d'un anion indosé est probable.</p>";
+  }
+
+  document.getElementById("resultat").innerHTML = message;
+}
+
 	</script>
 </body>
 </html>
