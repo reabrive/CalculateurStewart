@@ -58,6 +58,9 @@
    <body>
       <h1>Calculateur Stewart</h1>
       <form onsubmit="return false;">
+         <label for="ph">pH</label>
+         <input type="number" step="any" id="ph" name="ph">
+
          <label for="na">Natrémie (mmol/L)</label>
          <input type="number" step="any" id="na" name="na">
 
@@ -93,11 +96,7 @@
          <p>SIDa normal = 40 +/- 2 mmol/L</p>
          <p>SIG normal = 0 +/- 2 mmol/L. Si positif présence d'anions indosés en pratique jamais négatif.</p>
       </div>
-<footer>
-   <div class="container">
-      <p>&copy; 2023 Dr Evezard A. Tous droits réservés.</p>
-   </div>
-</footer>
+
 
 <style>
    footer {
@@ -117,10 +116,15 @@
       color: #5E5E5E;
    }
 </style>
-
+<footer>
+   <div class="container">
+      <p>&copy; 2023 Dr Evezard A. Tous droits réservés.</p>
+   </div>
+</footer>
 
      <script>
 		function calculerstewart() {
+      var ph = parseFloat(document.getElementById("ph").value)
 			var na = parseFloat(document.getElementById("na").value);
 			var k = parseFloat(document.getElementById("k").value);
 			var ca = parseFloat(document.getElementById("ca").value);
@@ -134,8 +138,9 @@
 			var SIDa = (na+k+2*ca+2*mg)-(cl +lactate);
 			var SIDe = bicarbonate+0.28*albumine+1.8*phosphore;
 			var SIG = SIDa-SIDe;
+      var kc = k-6*(7.40-ph);
 
-			document.getElementById("resultat").innerHTML = "<p>SIDa = "+SIDa.toFixed(2)+" mmol/L</p><p>SIDe = "+SIDe.toFixed(2)+" mmol/L</p><p>SIG = "+SIG.toFixed(2)+" mmol/L</p>";
+			document.getElementById("resultat").innerHTML = "<p>SIDa = "+SIDa.toFixed(2)+" mmol/L</p><p>SIDe = "+SIDe.toFixed(2)+" mmol/L</p><p>SIG = "+SIG.toFixed(2)+" mmol/L</p><p>Kaliémie corrigée = "+kc.toFixed(2)+" mmol/L</p>";
 		}
 	</script>
 </body>
