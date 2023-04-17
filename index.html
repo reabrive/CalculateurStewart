@@ -135,10 +135,6 @@
 
          <label for="bicarbonate">Bicarbonates (mmol/L)</label>
          <input type="number" step="any" id="bicarbonate" name="bicarbonate">
-	      
-	 <label for="Glycemie">Glycémie (mmol/L)</label>
-         <input type="number" step="any" id="gly" name="gly">
-
 
          <button onclick="calculerstewart()">Calculer</button>
       </form>
@@ -188,16 +184,13 @@
   var phosphore = parseFloat(document.getElementById("phosphore").value);
   var albumine = parseFloat(document.getElementById("albumine").value);
   var bicarbonate = parseFloat(document.getElementById("bicarbonate").value);
-  var gly = parseFloat(document.getElementById("gly").value);
-
 
   var SIDa = (na + k + 2 * ca + 2 * mg) - (cl + lactate);
   var SIDe = bicarbonate + 0.28 * albumine + 1.8 * phosphore;
   var SIG = SIDa - SIDe;
   var kc = k - 6 * (7.40 - ph);
-  var nac = na + 0.3 * (gly - 5 );
 
-  var message = "<p>SIDa = " + SIDa.toFixed(2) + " mmol/L</p><p>SIDe = " + SIDe.toFixed(2) + " mmol/L</p><p>SIG = " + SIG.toFixed(2) + " mmol/L</p><p>Kaliémie corrigée = " + kc.toFixed(2) + " mmol/L</p>"<p>Natrémie corrigée à la glycémie = " + nac.toFixed(2) + " mmol/L</p>";
+  var message = "<p>SIDa = " + SIDa.toFixed(2) + " mmol/L</p><p>SIDe = " + SIDe.toFixed(2) + " mmol/L</p><p>SIG = " + SIG.toFixed(2) + " mmol/L</p><p>Kaliémie corrigée = " + kc.toFixed(2) + " mmol/L</p>";
 
   if (ph > 7.42) {
   message += "<p>Le patient est en alcalose.</p>";
