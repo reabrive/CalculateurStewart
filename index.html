@@ -233,6 +233,38 @@ if (po > 105) {
 message += "<p> Le trou anionique est de : " + trou_anionique.toFixed(2) + " mEq/l <p>";
   message += "<p> Le trou anionique corrigé (Albumine) est de : " + trou_anionique_corrige.toFixed(2) + " mEq/l <p>";
   message += "<p> La calcémie corrigée (Albumine) est de : " + calcium_corrige.toFixed(2) + " mEq/l <p>";
+
+  if (ph < 7.37 && pc > 35 && pc < 44 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une acidose métabolique non compensée";
+  } else if (ph < 7.37 && pc < 35 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une acidose métabolique partiellement compensée";
+  } else if (ph > 7.37 && ph < 7.43 && pc < 35 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une acidose métabolique complètement compensée";
+  } else if (ph < 7.35 && pc > 45 && bicarbonate > 22 && bicarbonate < 26) {
+    message += "Selon la méthode classique, il s'agit d'une acidose respiratoire non compensée";
+  } else if (ph < 7.35 && pc > 45 && bicarbonate > 26) {
+    message += "Selon la méthode classique, il s'agit d'une acidose respiratoire partiellement compensée";
+  } else if (ph > 7.37 && ph < 7.43 && pc > 45 && bicarbonate > 26) {
+    message += "Selon la méthode classique, il s'agit d'une acidose respiratoire complètement compensée";
+  } else if (ph > 7.45 && pc > 35 && pc < 44 && bicarbonate > 26) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose métabolique non compensée";
+  } else if (ph > 7.45 && pc > 44 && bicarbonate > 26) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose métabolique partiellement compensée";
+  } else if (ph > 7.37 && ph < 7.43 && pc > 44 && bicarbonate > 26) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose métabolique complètement compensée";
+  } else if (ph > 7.45 && pc < 35 && bicarbonate > 22 && bicarbonate < 26) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose respiratoire non compensée";
+  } else if (ph > 7.45 && pc < 35 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose respiratoire partiellement compensée";
+  } else if (ph > 7.37 && ph < 7.43 && pc < 35 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose respiratoire complètement compensée";
+  } else if (ph < 7.37 && pc > 45 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une acidose mixte";
+  } else {
+    message += "Selon la méthode classique le diagnostic ne peut pas être déterminé avec les informations fournies.";
+  }
+
+
   document.getElementById("resultat").innerHTML = message;
 }
 
