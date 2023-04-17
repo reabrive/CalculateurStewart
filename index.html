@@ -98,7 +98,7 @@
       </style>
    </head>
    <body>
-      <h1>Analyse des GDS selon la méthode de Stewart</h1>
+      <h1>Analyse des GDS et du ionogramme sanguin. Méthode de Stewart et de Henderson-Hasselbalch. </h1>
       <form onsubmit="return false;">
          <label for="ph">pH</label>
          <input type="number" step="any" id="ph" name="ph">
@@ -115,7 +115,7 @@
          <label for="k">Kaliémie (mmol/L)</label>
          <input type="number" step="any" id="k" name="k">
 
-         <label for="ca">Calcémie (mmol/L)</label>
+         <label for="ca">Calcémie totale (mmol/L)</label>
          <input type="number" step="any" id="ca" name="ca">
 
          <label for="mg">Magnésémie (mmol/L)</label>
@@ -135,6 +135,9 @@
 
          <label for="bicarbonate">Bicarbonates (mmol/L)</label>
          <input type="number" step="any" id="bicarbonate" name="bicarbonate">
+         <label for="glycemie">Glycémie (mmol/L)</label>
+         <input type="number" step="any" id="glycemie" name="glycemie">
+
 
          <button onclick="calculerstewart()">Calculer</button>
       </form>
@@ -142,7 +145,7 @@
       <div id="resultat"></div>
       <div id="info">
          <p>SIDa normal = 40 +/- 2 mmol/L , une augmentation du SIDa est en faveur d'une alcalose métabolique, une diminution en faveur d'une acidose métabolique</p>
-         <p>SIG normal = 0 +/- 2 mmol/L. Si positif présence d'anions indosés en pratique jamais négatif.</p>
+         <p>SIG normal = 0 +/- 2 mmol/L. Si positif présence d'anions indosés en pratique jamais négatif.</p><p>Le TA normal est de 12+/-3 mEq/L.</p>
       </div>
 
 
@@ -184,11 +187,17 @@
   var phosphore = parseFloat(document.getElementById("phosphore").value);
   var albumine = parseFloat(document.getElementById("albumine").value);
   var bicarbonate = parseFloat(document.getElementById("bicarbonate").value);
+  var glycemie = parseFloat(document.getElementById("glycemie").value);
 
   var SIDa = (na + k + 2 * ca + 2 * mg) - (cl + lactate);
   var SIDe = bicarbonate + 0.28 * albumine + 1.8 * phosphore;
   var SIG = SIDa - SIDe;
   var kc = k - 6 * (7.40 - ph);
+  var natcor = na + 0.3 * (glycemie - 5);
+  var trou_anionique = na - (cl + bicarbonate);
+  var trou_anionique_corrige = trou_anionique + (40 - albumine) * 0.25;
+  var calcium_corrige = ca - 0.025 * (albumine - 40);
+
 
   var message = "<p>SIDa = " + SIDa.toFixed(2) + " mmol/L</p><p>SIDe = " + SIDe.toFixed(2) + " mmol/L</p><p>SIG = " + SIG.toFixed(2) + " mmol/L</p><p>Kaliémie corrigée = " + kc.toFixed(2) + " mmol/L</p>";
 
@@ -221,7 +230,9 @@ if (po > 105) {
 } else if (po < 70) {
   message += "<p>Le patient est hypoxémique.</p>";
 }
-
+message += "<p> Le trou anionique est de : " + trou_anionique.toFixed(2) + " mEq/l <p>";
+  message += "<p> Le trou anionique corrigé (Albumine) est de : " + trou_anionique_corrige.toFixed(2) + " mEq/l <p>";
+  message += "<p> La calcémie corrigée (Albumine) est de : " + calcium_corrige.toFixed(2) + " mEq/l <p>";
   document.getElementById("resultat").innerHTML = message;
 }
 
