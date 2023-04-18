@@ -117,43 +117,46 @@ button:hover {
    <body>
       <h1>Analyse des GDS et du ionogramme sanguin. Méthode de Stewart et classique. </h1>
       <form onsubmit="return false;">
-         <label for="ph">pH</label>
-         <input type="number" step="any" id="ph" name="ph">
-	      
-	       <label for="po">PO2</label>
-         <input type="number" step="any" id="po" name="po">
-	      
-	       <label for="pc">PCO2</label>
-         <input type="number" step="any" id="pc" name="pc">
+         
+      <label for="ph">pH</label>
+    <input type="number" step="0.05" id="ph" name="ph" data-default="7.4">
 
-         <label for="na">Natrémie (mmol/L)</label>
-         <input type="number" step="any" id="na" name="na">
+    <label for="po">PO2</label>
+    <input type="number" step="any" id="po" name="po" data-default="100">
 
-         <label for="k">Kaliémie (mmol/L)</label>
-         <input type="number" step="any" id="k" name="k">
+    <label for="pc">PCO2</label>
+    <input type="number" step="any" id="pc" name="pc" data-default="40">
 
-         <label for="ca">Calcémie totale (mmol/L)</label>
-         <input type="number" step="any" id="ca" name="ca">
+    <label for="na">Natrémie (mmol/L)</label>
+    <input type="number" step="any" id="na" name="na" data-default="140">
 
-         <label for="mg">Magnésémie (mmol/L)</label>
-         <input type="number" step="any" id="mg" name="mg">
+    <label for="k">Kaliémie (mmol/L)</label>
+    <input type="number" step="0.1" id="k" name="k" data-default="4.5">
 
-         <label for="cl">Chlorémie (mmol/L)</label>
-         <input type="number" step="any" id="cl" name="cl">
+    <label for="ca">Calcémie totale (mmol/L)</label>
+    <input type="number" step="0.1" id="ca" name="ca" data-default="2.25">
 
-         <label for="lactate">Lactatémie (mmol/L)</label>
-         <input type="number" step="any" id="lactate" name="lactate">
+    <label for="mg">Magnésémie (mmol/L)</label>
+    <input type="number" step="0.1" id="mg" name="mg" data-default="0.8">
 
-         <label for="phosphore">Phosphorémie (mmol/L)</label>
-         <input type="number" step="any" id="phosphore" name="phosphore">
+    <label for="cl">Chlorémie (mmol/L)</label>
+    <input type="number" step="any" id="cl" name="cl" data-default="100">
 
-         <label for="albumine">Albuminémie (g/L)</label>
-         <input type="number" step="any" id="albumine" name="albumine">
+    <label for="lactate">Lactatémie (mmol/L)</label>
+    <input type="number" step="0.1" id="lactate" name="lactate" data-default="1">
 
-         <label for="bicarbonate">Bicarbonates (mmol/L)</label>
-         <input type="number" step="any" id="bicarbonate" name="bicarbonate">
-         <label for="glycemie">Glycémie (mmol/L)</label>
-         <input type="number" step="any" id="glycemie" name="glycemie">
+    <label for="phosphore">Phosphorémie (mmol/L)</label>
+    <input type="number" step="0.1" id="phosphore" name="phosphore" data-default="1.2">
+
+    <label for="albumine">Albuminémie (g/L)</label>
+    <input type="number" step="any" id="albumine" name="albumine" data-default="40">
+
+    <label for="bicarbonate">Bicarbonates (mmol/L)</label>
+    <input type="number" step="any" id="bicarbonate" name="bicarbonate" data-default="24">
+
+    <label for="glycemie">Glycémie (mmol/L)</label>
+    <input type="number" step="0.1" id="glycemie" name="glycemie" data-default="5.5">
+
 
 
          <button onclick="calculerstewart()">Calculer</button>
@@ -191,6 +194,14 @@ button:hover {
 </footer>
 
      <script>
+     document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('focus', function () {
+                if (!this.dataset.used) {
+                    this.value = this.dataset.default || '';
+                    this.dataset.used = 'true';
+                }
+            });
+        });
   function calculerstewart() {
   var ph = parseFloat(document.getElementById("ph").value);
   var po = parseFloat(document.getElementById("po").value);
