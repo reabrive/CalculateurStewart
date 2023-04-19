@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Calculateur Stewart</title>
+      <meta charset="utf-8">
+      <style>
+         
+	/* CSS pour téléphone portable */
+
+/* Réinitialisation des styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Police et taille de la police */
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Taille du conteneur et centrage horizontal */
+
+.container {
+  max-width: 100%;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Style de formulaire */
+
+form {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+/* Style des champs de saisie */
+
+input[type="text"], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Style des boutons */
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Style des messages de confirmation */
+
+.success {
+  color: green;
+}
+
+/* Style des messages d'erreur */
+
+.error {
+  color: red;
+}
+
+/* Style des champs de saisie de type roue défilante */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 8px 0;
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 12px 20px;
+}
+
+      </style>
+   </head>
+   <body>
+      <h1>Analyse des GDS et du ionogramme sanguin. Méthode de Stewart et classique. </h1>
+      <form onsubmit="return false;">
+         
+      <label for="ph">pH</label>
+    <input type="number" step="0.05" id="ph" name="ph" data-default="7.4">
+
+    <label for="po">PO2</label>
+    <input type="number" step="any" id="po" name="po" data-default="100">
+
+    <label for="pc">PCO2</label>
+    <input type="number" step="any" id="pc" name="pc" data-default="40">
+
+    <label for="na">Natrémie (mmol/L)</label>
+    <input type="number" step="any" id="na" name="na" data-default="140">
+
+    <label for="k">Kaliémie (mmol/L)</label>
+    <input type="number" step="0.1" id="k" name="k" data-default="4.5">
+
+    <label for="ca">Calcémie totale (mmol/L)</label>
+    <input type="number" step="0.1" id="ca" name="ca" data-default="2.25">
+
+    <label for="mg">Magnésémie (mmol/L)</label>
+    <input type="number" step="0.1" id="mg" name="mg" data-default="0.8">
+
+    <label for="cl">Chlorémie (mmol/L)</label>
+    <input type="number" step="any" id="cl" name="cl" data-default="100">
+
+    <label for="lactate">Lactatémie (mmol/L)</label>
+    <input type="number" step="0.1" id="lactate" name="lactate" data-default="1">
+
+    <label for="phosphore">Phosphorémie (mmol/L)</label>
+    <input type="number" step="0.1" id="phosphore" name="phosphore" data-default="1.2">
+
+    <label for="albumine">Albuminémie (g/L)</label>
+    <input type="number" step="any" id="albumine" name="albumine" data-default="40">
+
+    <label for="bicarbonate">Bicarbonates (mmol/L)</label>
+    <input type="number" step="any" id="bicarbonate" name="bicarbonate" data-default="24">
+
+    <label for="glycemie">Glycémie (mmol/L)</label>
+    <input type="number" step="0.1" id="glycemie" name="glycemie" data-default="5.5">
+
+
+
+         <button onclick="calculerstewart()">Calculer</button>
+      </form>
+
+      <div id="resultat"></div>
+      <div id="info">
+         <p>SIDa normal = 40 +/- 2 mmol/L , une augmentation du SIDa est en faveur d'une alcalose métabolique, une diminution en faveur d'une acidose métabolique</p>
+         <p>SIG normal = 0 +/- 2 mmol/L. Si positif présence d'anions indosés en pratique jamais négatif.</p><p>Le TA normal est de 12+/-3 mEq/L.</p>
+      </div>
+
+
+<style>
+   footer {
+      background-color: #F4F4F4;
+      padding: 20px 0;
+      text-align: center;
+   }
+
+   .container {
+      max-width: 1200px;
+      margin: 0 auto;
+   }
+
+   p {
+      margin: 0;
+      font-size: 18px;
+      color: #5E5E5E;
+   }
+</style>
+<footer>
+   <div class="container">
+      <p>&copy; 2023 Dr Evezard A. L'utilisation de ce calculateur engage la responsabilité exclusive de l'utilisateur en cas d'application clinique.</p>
+   </div>
+</footer>
+
+     <script>
+     document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('focus', function () {
+                if (!this.dataset.used) {
+                    this.value = this.dataset.default || '';
+                    this.dataset.used = 'true';
+                }
+            });
+        });
+  function calculerstewart() {
+  var ph = parseFloat(document.getElementById("ph").value);
+  var po = parseFloat(document.getElementById("po").value);
+  var pc = parseFloat(document.getElementById("pc").value);
+  var na = parseFloat(document.getElementById("na").value);
+  var k = parseFloat(document.getElementById("k").value);
+  var ca = parseFloat(document.getElementById("ca").value);
+  var mg = parseFloat(document.getElementById("mg").value);
+  var cl = parseFloat(document.getElementById("cl").value);
+  var lactate = parseFloat(document.getElementById("lactate").value);
+  var phosphore = parseFloat(document.getElementById("phosphore").value);
+  var albumine = parseFloat(document.getElementById("albumine").value);
+  var bicarbonate = parseFloat(document.getElementById("bicarbonate").value);
+  var glycemie = parseFloat(document.getElementById("glycemie").value);
+
+  var SIDa = (na + k + 2 * ca + 2 * mg) - (cl + lactate);
+  var SIDe = bicarbonate + 0.28 * albumine + 1.8 * phosphore;
+  var SIG = SIDa - SIDe;
+  var kc = k - 6 * (7.40 - ph);
+  var natcor = na + 0.3 * (glycemie - 5);
+  var trou_anionique = na - (cl + bicarbonate);
+  var trou_anionique_corrige = trou_anionique + (40 - albumine) * 0.25;
+  var calcium_corrige = ca - 0.025 * (albumine - 40);
+
+
+  var message = "<p>SIDa = " + SIDa.toFixed(2) + " mmol/L</p><p>SIDe = " + SIDe.toFixed(2) + " mmol/L</p><p>SIG = " + SIG.toFixed(2) + " mmol/L</p><p>Kaliémie corrigée = " + kc.toFixed(2) + " mmol/L</p>";
+
+  if (ph > 7.42) {
+  message += "<p>Le patient est en alcalose.</p>";
+} else if (ph < 7.38) {
+  message += "<p>Le patient est en acidose.</p>";
+} else {
+  message += "<p>Le pH est dans la plage normale.</p>";
+}
+
+if (SIDa > 42 && SIG < 5 ) {
+  message += "<p>Selon la méthode de Stewart le patient présente une alcalose métabolique.</p>";
+} else if (SIDa < 38 && SIG < 5) {
+  message += "<p>Selon la méthode Stewart le patient présente une acidose métabolique.</p>";
+}
+
+if (SIG > 5) {
+  message += "<p>Selon la méthode de Stewart la présence d'un anion indosé est probable.</p>";
+}
+
+if (pc < 32) {
+  message += "<p>Le patient est hypocapnique.</p>";
+} else if (pc > 45) {
+  message += "<p>Le patient est hypercapnique.</p>";
+}
+
+if (po > 105) {
+  message += "<p>Le patient est hyperoxique.</p>";
+} else if (po < 70) {
+  message += "<p>Le patient est hypoxémique.</p>";
+}
+message += "<p> Le trou anionique est de : " + trou_anionique.toFixed(2) + " mEq/l <p>";
+  message += "<p> Le trou anionique corrigé (Albumine) est de : " + trou_anionique_corrige.toFixed(2) + " mEq/l <p>";
+  message += "<p> La calcémie corrigée (Albumine) est de : " + calcium_corrige.toFixed(2) + " mEq/l <p>";
+
+  if (ph < 7.37 && pc > 35 && pc < 44 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une acidose métabolique non compensée";
+  } else if (ph < 7.37 && pc < 35 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une acidose métabolique partiellement compensée";
+  } else if (ph > 7.37 && ph < 7.43 && pc < 35 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une acidose métabolique complètement compensée";
+  } else if (ph < 7.35 && pc > 45 && bicarbonate > 22 && bicarbonate < 26) {
+    message += "Selon la méthode classique, il s'agit d'une acidose respiratoire non compensée";
+  } else if (ph < 7.35 && pc > 45 && bicarbonate > 26) {
+    message += "Selon la méthode classique, il s'agit d'une acidose respiratoire partiellement compensée";
+  } else if (ph > 7.37 && ph < 7.43 && pc > 45 && bicarbonate > 26) {
+    message += "Selon la méthode classique, il s'agit d'une acidose respiratoire complètement compensée";
+  } else if (ph > 7.45 && pc > 35 && pc < 44 && bicarbonate > 26) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose métabolique non compensée";
+  } else if (ph > 7.45 && pc > 44 && bicarbonate > 26) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose métabolique partiellement compensée";
+  } else if (ph > 7.37 && ph < 7.43 && pc > 44 && bicarbonate > 26) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose métabolique complètement compensée";
+  } else if (ph > 7.45 && pc < 35 && bicarbonate > 22 && bicarbonate < 26) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose respiratoire non compensée";
+  } else if (ph > 7.45 && pc < 35 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose respiratoire partiellement compensée";
+  } else if (ph > 7.37 && ph < 7.43 && pc < 35 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une alcalose respiratoire complètement compensée";
+  } else if (ph < 7.37 && pc > 45 && bicarbonate < 22) {
+    message += "Selon la méthode classique, il s'agit d'une acidose mixte";
+  } else {
+    message += "Selon la méthode classique le diagnostic ne peut pas être déterminé avec les informations fournies.";
+  }
+
+
+  document.getElementById("resultat").innerHTML = message;
+}
+
+	</script>
+</body>
+</html>
+           
