@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Calculateur Stewart</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="style.css">
+   </head>
+   <body>
+      <h1>Analyse des GDS et du ionogramme sanguin. Méthode de Stewart et classique. </h1>
+      <form onsubmit="return false;">
+         
+      <label for="ph">pH</label>
+      <input type="number" step="0.05" pattern="\d+(\.\d{0,2})?" id="ph" name="ph" data-default="7.4">
+
+      <label for="po">PO2</label>
+      <input type="number" step="any" pattern="\d+(\.\d{1,2})?" id="po" name="po" data-default="100">
+
+      <label for="pc">PCO2</label>
+      <input type="number" step="any" pattern="\d+(\.\d{1,2})?" id="pc" name="pc" data-default="40">
+
+      <label for="na">Natrémie (mmol/L)</label>
+      <input type="number" step="any" pattern="\d+(\.\d{1,2})?" id="na" name="na" data-default="140">
+
+      <label for="k">Kaliémie (mmol/L)</label>
+      <input type="number" step="0.1" pattern="\d+(\.\d{1,2})?" id="k" name="k" data-default="4.5">
+
+      <label for="ca">Calcémie totale (mmol/L)</label>
+      <input type="number" step="0.1" pattern="\d+(\.\d{1,2})?" id="ca" name="ca" data-default="2.25">
+
+      <label for="mg">Magnésémie (mmol/L)</label>
+      <input type="number" step="0.1" pattern="\d+(\.\d{1,2})?" id="mg" name="mg" data-default="0.8">
+
+      <label for="cl">Chlorémie (mmol/L)</label>
+      <input type="number" step="any" pattern="\d+(\.\d{1,2})?" id="cl" name="cl" data-default="100">
+
+      <label for="lactate">Lactatémie (mmol/L)</label>
+      <input type="number" step="0.1" pattern="\d+(\.\d{1,2})?" id="lactate" name="lactate" data-default="1">
+
+      <label for="phosphore">Phosphorémie (mmol/L)</label>
+      <input type="number" step="0.1" pattern="\d+(\.\d{1,2})?" id="phosphore" name="phosphore" data-default="1.2">
+
+      <label for="albumine">Albuminémie (g/L)</label>
+      <input type="number" step="any" pattern="\d+(\.\d{1,2})?" id="albumine" name="albumine" data-default="40">
+
+      <label for="bicarbonate">Bicarbonates (mmol/L)</label>
+      <input type="number" step="any" pattern="\d+(\.\d{1,2})?" id="bicarbonate" name="bicarbonate" data-default="24">
+
+      <label for="glycemie">Glycémie (mmol/L)</label>
+      <input type="number" step="0.1" pattern="\d+(\.\d{1,2})?" id="glycemie" name="glycemie" data-default="5.5">
+
+      <button onclick="calculerstewart()">Calculer</button>
+      <button type="reset" id="reset">Reset</button>
+      </form>
+
+      <div id="resultat"></div>
+      <div id="info">
+         <p>SIDa normal = 40 +/- 2 mmol/L , une augmentation du SIDa est en faveur d'une alcalose métabolique, une diminution en faveur d'une acidose métabolique</p>
+         <p>SIG normal = 0 +/- 2 mmol/L. Si positif présence d'anions indosés en pratique jamais négatif.</p><p>Le TA normal est de 12+/-3 mEq/L.</p>
+      </div>
+      <footer>
+         <div class="container">
+            <p>&copy; 2023 Dr Evezard A. L'utilisation de ce calculateur engage la responsabilité exclusive de l'utilisateur en cas d'application clinique.</p>
+         </div>
+      </footer>
+      <script src="script.js"></script>
+   </body>
+</html>
+
