@@ -62,7 +62,11 @@ if (po > 105) {
 } else if (po < 70) {
   message += "<p>Le patient est hypoxémique.</p>";
 }
-message += "<p> Le trou anionique est de : " + trou_anionique.toFixed(2) + " mEq/l <p>";
+   if (lactate > 1.90) {
+  message += "<p>Le patient présente une hyperlactatémie.</p>";
+} 
+   
+  message += "<p> Le trou anionique est de : " + trou_anionique.toFixed(2) + " mEq/l <p>";
   message += "<p> Le trou anionique corrigé (Albumine) est de : " + trou_anionique_corrige.toFixed(2) + " mEq/l <p>";
   message += "<p> La calcémie corrigée (Albumine) est de : " + calcium_corrige.toFixed(2) + " mEq/l <p>";
 
