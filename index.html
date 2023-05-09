@@ -11,7 +11,7 @@
       <form onsubmit="return false;">
          
       <label for="ph">pH</label>
-      <input type="number" step="0.05" pattern="\d+(\.\d{0,2})?" id="ph" name="ph" data-default="7.4">
+      <input type="number" step="0.01" pattern="\d+(\.\d{0,2})?" id="ph" name="ph" data-default="7.4">
 
       <label for="po">PO2</label>
       <input type="number" step="any" pattern="\d+(\.\d{1,2})?" id="po" name="po" data-default="100">
@@ -26,7 +26,7 @@
       <input type="number" step="0.1" pattern="\d+(\.\d{1,2})?" id="k" name="k" data-default="4.5">
 
       <label for="ca">Calcémie totale (mmol/L)</label>
-      <input type="number" step="0.1" pattern="\d+(\.\d{1,2})?" id="ca" name="ca" data-default="2.25">
+      <input type="number" step="any" pattern="\d+(\.\d{1,2})?" id="ca" name="ca" data-default="2.25">
 
       <label for="mg">Magnésémie (mmol/L)</label>
       <input type="number" step="0.1" pattern="\d+(\.\d{1,2})?" id="mg" name="mg" data-default="0.8">
@@ -56,7 +56,7 @@
       <div id="resultat"></div>
       <div id="info">
          <p>SIDa normal = 40 +/- 2 mmol/L , une augmentation du SIDa est en faveur d'une alcalose métabolique, une diminution en faveur d'une acidose métabolique</p>
-         <p>SIG normal = 0 +/- 2 mmol/L. Si positif présence d'anions indosés en pratique jamais négatif.</p><p>Le TA normal est de 12+/-3 mEq/L.</p>
+         <p>SIG normal = 0 +/- 2 mmol/L. Si positif présence d'anions indosés probable en pratique jamais négatif.</p><p>Le TA normal est de 12+/-3 mEq/L.</p>
       </div>
       <footer>
          <div class="container">
