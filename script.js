@@ -22,7 +22,7 @@
   var glycemie = parseFloat(document.getElementById("glycemie").value);
 
   var SIDa = (na + k + 2 * ca + 2 * mg) - (cl + lactate);
-  var SIDe = bicarbonate + albumine * (0.123*ph - 0.631)  + phosphore * (0.309 * ph - 0.469) ;
+  var SIDe = 12.2*(pc/10**-ph) + albumine * (0.123*ph - 0.631)  + phosphore * (0.309 * ph - 0.469) ;
   var SIG = SIDa - SIDe;
   var kc = k - 6 * (7.40 - ph);
   var natcor = na + 0.3 * (glycemie - 5);
