@@ -22,7 +22,7 @@
   var glycemie = parseFloat(document.getElementById("glycemie").value);
 
   var SIDa = (na + k + 2 * ca + 2 * mg) - (cl + lactate);
-  var SIDe = bicarbonate + albumine * (0.123*ph - 0.631)  + phosphore * (0.309 * ph - 0.469) ;
+  var SIDe = 12.2 * (pc / (10 ** -ph)) + albumine * (0.123 * ph - 0.631)  + phosphore * (0.309 * ph - 0.469) ;
   var SIG = SIDa - SIDe;
   var kc = k - 6 * (7.40 - ph);
   var natcor = na + 0.3 * (glycemie - 5);
@@ -68,7 +68,8 @@ if (po > 105) {
    
   message += "<p> Le trou anionique est de : " + trou_anionique.toFixed(2) + " mEq/l <p>";
   message += "<p> Le trou anionique corrigé (Albumine) est de : " + trou_anionique_corrige.toFixed(2) + " mEq/l <p>";
-  message += "<p> La calcémie corrigée (Albumine) est de : " + calcium_corrige.toFixed(2) + " mEq/l <p>";
+  message += "<p> La calcémie corrigée (Albumine) est de : " + calcium_corrige.toFixed(2) + " mmol/l <p>";
+  message += "<p> La natrémie corrigée (Glycémie) est de : " + natcor.toFixed(2) + " mmol/l <p>";
 
   if (ph < 7.37 && pc > 35 && pc < 44 && bicarbonate < 22) {
     message += "Selon la méthode classique, il s'agit d'une acidose métabolique non compensée";
