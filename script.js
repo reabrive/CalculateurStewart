@@ -31,7 +31,7 @@
   var calcium_corrige = ca - 0.025 * (albumine - 40);
 
 
-  var message = "<p>SIDa = " + SIDa.toFixed(2) + " mmol/L</p><p>SIDe = " + SIDe.toFixed(2) + " mmol/L</p><p>SIG = " + SIG.toFixed(2) + " mmol/L</p><p>Kaliémie corrigée = " + kc.toFixed(2) + " mmol/L</p>";
+  var message = "<p>SIDa = " + SIDa.toFixed(2) + " mEq/L</p><p>SIDe = " + SIDe.toFixed(2) + " mEq/L</p><p>SIG = " + SIG.toFixed(2) + " mEq/L</p><p>Kaliémie corrigée = " + kc.toFixed(2) + " mmol/L</p>";
 
   if (ph > 7.42) {
   message += "<p>Le patient est en alcalose.</p>";
